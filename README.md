@@ -47,17 +47,19 @@ Allocate a **$120 Million USD** payload budget across 6 vital life support syste
 5. **Agriculture & Food**: Lyophilized Packaged Rations vs NFT Hydroponic Greenhouse vs Closed-Loop Aeroponic Vertical Array + Spirulina Vats.
 6. **Water Reclamation**: Condensate Graywater Loop vs Vapor Compression Distillation (VCD) vs 2023 ISS-milestone 98% Brine Processor Assembly (BPA).
 
-### 4. 📊 Live Mission Control Telemetry
-- Authentic Apollo / Shuttle / Orion inspired **Master Caution & Warning (C&W)** annunciator matrix (`O₂ SYS`, `H₂O REC`, `POWER`, `HULL PRES`, `RAD ALARM`, `CREW MED`).
-- Telemetry gauges with Sol burn rates and days-remaining forecasts:
-  - **Oxygen (kg)**: Daily consumption (0.84 kg/astronaut/Sol) vs MOXIE production.
-  - **Water (Liters)**: 2.8 L/astronaut/Sol vs ECLSS recycling percentage recovery.
-  - **Food (kcal)**: 2,800 kcal/astronaut/Sol vs greenhouse harvest cycles.
-  - **Power (kWh / kW)**: Battery storage, net generation vs load, solar dust attenuation factor.
-  - **Habitat Structural Integrity (%)**: Micrometeorite abrasions and thermal stress.
-  - **Radiation Cumulative Dose (mSv)**: Compared against the NASA 600 mSv career limit.
-- Interactive **Recharts** multi-stream telemetry visualizations (Consumables, Power Grid, Crew Vitals, Radiation Trends).
-- Live timestamped **CAPCOM Communication Feed**.
+### 4. 🎮 Junior Astronaut Mode (Ages 7–12) & Interactive Outpost
+- **Interactive Visual Outpost Canvas**: A vibrant 2D cross-section outpost environment featuring the Main Pressurized Habitat Dome, Aeroponic Greenhouse, Solar Arrays / Kilopower Nuclear, Water Recycling Vessel, and Surface Exploration Rover.
+- **Clickable Module Inspections & Micro-Actions**:
+  - *Greenhouse*: Water crops and harvest fresh microgreens (+caloric yield & crew morale).
+  - *Solar Grid*: Brush away abrasive Martian dust to restore peak photovoltaic output.
+  - *Water Recycler*: Flush the centrifuge filter to optimize 98% closed-loop recovery.
+  - *Main Habitat*: Inspect airlocks and patch hull micro-stress.
+  - *Surface Rover*: Deploy rover on ground-penetrating radar ice-scouting drives.
+- **A.S.T.R.O. Friendly Robotic Companion**: An animated robot with expressive eyes and speech bubbles that translates complex aerospace engineering into fun, kid-friendly mission tips and space facts.
+- **Interplanetary Communication Delay Relay**: A real gameplay mechanic demonstrating light-speed radio propagation across 225,000,000 km between Earth and Mars ($300,000\text{ km/s}$), with a scaled countdown timer and Houston supply uplinks.
+- **Dual Gameplay Modes**: Toggle anytime between **🚀 Junior Cadet Mode** (visual outpost, friendly gauges, A.S.T.R.O.) and **🛰️ Flight Director Pro Mode** (Recharts telemetry, C&W matrix, quantitative data).
+
+### 5. 📊 Live Mission Control Telemetry (Pro Mode)
 
 ### 5. ⚠️ Authentic Tactical Crisis Events
 Encounter real deep-space emergencies with multi-choice operational decisions and scientific explanations:

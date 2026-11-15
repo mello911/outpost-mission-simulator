@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   GamePhase, 
   MissionSetupConfig, 
   OutpostConfiguration, 
-  MissionState 
+  MissionState,
+  UIMode 
 } from './types';
 import { CREW_PRESETS } from './data/crew';
 import { DESTINATIONS } from './data/destinations';
@@ -23,6 +24,7 @@ import { Header } from './components/Header';
 import { LandingPage } from './components/LandingPage';
 import { MissionSetup } from './components/MissionSetup';
 import { OutpostConstruction } from './components/OutpostConstruction';
+import { JuniorMissionControl } from './components/JuniorMissionControl';
 import { MissionControl } from './components/MissionControl';
 import { EventModal } from './components/EventModal';
 import { MissionDebrief } from './components/MissionDebrief';
@@ -31,6 +33,7 @@ import { EducationalHandbook } from './components/EducationalHandbook';
 export function App() {
   const [phase, setPhase] = useState<GamePhase>('landing');
   const [previousPhase, setPreviousPhase] = useState<GamePhase>('landing');
+  const [uiMode, setUiMode] = useState<UIMode>('junior');
   
   // Mission configuration
   const [setupConfig, setSetupConfig] = useState<MissionSetupConfig>({
@@ -51,15 +54,21 @@ export function App() {
     if (saved && !saved.isMissionOver && saved.currentSol > 1) {
       setMissionState(saved);
       setSetupConfig(saved.config);
+      if (saved.uiMode) {
+        setUiMode(saved.uiMode);
+      }
     }
   }, []);
 
   // Autosave to LocalStorage when simulation state updates
   useEffect(() => {
     if (missionState && missionState.phase === 'live_simulation') {
-      saveMissionToStorage(missionState);
+      saveMissionToStorage({
+        ...missionState,
+        uiMode
+      });
     }
-  }, [missionState]);
+  }, [missionState, uiMode]);
 
   // Simulation timer loop
   useEffect(() => {
@@ -192,6 +201,116 @@ export function App() {
     });
   };
 
+  const handleModuleAction = (actionType: 'clean_solar' | 'tend_crops' | 'flush_water' | 'inspect_hab' | 'rover_scout') => {
+    if (!missionState) return;
+
+    setMissionState(prev => {
+      if (!prev) return null;
+      const logs = [...prev.logs];
+      let res = { ...prev.resources };
+      let crew = [...prev.crew];
+
+      if (actionType === 'clean_solar') {
+        res.solarEfficiencyFactor = 1.0;
+        res.storedEnergyKWh = Math.min(res.maxBatteryStorageKWh, res.storedEnergyKWh + 8);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '11:00:00 UTC',
+          type: 'action',
+          message: 'MODULE ACTION: Solar Panels Brushed Clean of Dust.',
+          detail: 'Solar efficiency restored to 100%. +8 kWh stored.'
+        });
+      } else if (actionType === 'tend_crops') {
+        res.foodKcal = Math.min(res.maxFoodKcal, res.foodKcal + 800);
+        crew = crew.map(c => ({ ...c, morale: Math.min(100, c.morale + 3) }));
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '11:00:00 UTC',
+          type: 'action',
+          message: 'MODULE ACTION: Greenhouse Crops Tended & Harvested.',
+          detail: '+800 kcal fresh microgreens harvested. Crew morale boosted!'
+        });
+      } else if (actionType === 'flush_water') {
+        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 6);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '11:00:00 UTC',
+          type: 'action',
+          message: 'MODULE ACTION: Water Distillation Filter Flushed.',
+          detail: '+6.0 Liters clean water recovered from loop.'
+        });
+      } else if (actionType === 'inspect_hab') {
+        res.habitatIntegrityPct = Math.min(100, res.habitatIntegrityPct + 5);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '11:00:00 UTC',
+          type: 'action',
+          message: 'MODULE ACTION: Habitat Airlock Tested & Sealed.',
+          detail: 'Hull integrity reinforced by +5%.'
+        });
+      } else if (actionType === 'rover_scout') {
+        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 8);
+        res.foodKcal = Math.min(res.maxFoodKcal, res.foodKcal + 500);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '11:00:00 UTC',
+          type: 'action',
+          message: 'MODULE ACTION: Surface Rover Detected Subsurface Volatiles!',
+          detail: '+8 Liters ice extracted. Crew celebrations erupted!'
+        });
+      }
+
+      return {
+        ...prev,
+        resources: res,
+        crew,
+        logs: logs.slice(0, 50)
+      };
+    });
+  };
+
+  const handleReceiveCommSupply = (bonusResource: 'power' | 'oxygen' | 'water') => {
+    if (!missionState) return;
+
+    setMissionState(prev => {
+      if (!prev) return null;
+      const logs = [...prev.logs];
+      let res = { ...prev.resources };
+
+      if (bonusResource === 'power') {
+        res.storedEnergyKWh = Math.min(res.maxBatteryStorageKWh, res.storedEnergyKWh + 15);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '16:00:00 UTC',
+          type: 'milestone',
+          message: 'COMM RELAY: Houston Uplinked Emergency Battery Reserve (+15 kWh).'
+        });
+      } else if (bonusResource === 'oxygen') {
+        res.oxygenKg = Math.min(res.maxOxygenKg, res.oxygenKg + 4);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '16:00:00 UTC',
+          type: 'milestone',
+          message: 'COMM RELAY: Houston Uplinked Oxygen Purge Protocol (+4 kg O₂).'
+        });
+      } else if (bonusResource === 'water') {
+        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 10);
+        logs.unshift({
+          sol: prev.currentSol,
+          timestamp: '16:00:00 UTC',
+          type: 'milestone',
+          message: 'COMM RELAY: Houston Uplinked Potable Water Reserve (+10 Liters).'
+        });
+      }
+
+      return {
+        ...prev,
+        resources: res,
+        logs: logs.slice(0, 50)
+      };
+    });
+  };
+
   const handleCrisisChoice = (choiceId: string) => {
     if (!missionState) return;
     const updated = resolveCrisisChoice(missionState, choiceId);
@@ -225,6 +344,8 @@ export function App() {
         currentPhase={phase}
         currentSol={missionState?.currentSol}
         destinationName={DESTINATIONS[setupConfig.destination]?.name}
+        uiMode={uiMode}
+        onToggleUIMode={() => setUiMode(prev => prev === 'junior' ? 'pro' : 'junior')}
         isMuted={isMuted}
         setIsMuted={setIsMuted}
         ambientHumEnabled={ambientHumEnabled}
@@ -259,15 +380,30 @@ export function App() {
         )}
 
         {phase === 'live_simulation' && missionState && (
-          <MissionControl
-            state={missionState}
-            onAdvanceSol={handleAdvanceSol}
-            onTogglePause={handleTogglePause}
-            onChangeSpeed={handleChangeSpeed}
-            onSilenceMasterAlarm={handleSilenceMasterAlarm}
-            onManualAction={handleManualAction}
-            onAbortMission={handleRestartMission}
-          />
+          uiMode === 'junior' ? (
+            <JuniorMissionControl
+              state={missionState}
+              onAdvanceSol={handleAdvanceSol}
+              onTogglePause={handleTogglePause}
+              onChangeSpeed={handleChangeSpeed}
+              onSilenceMasterAlarm={handleSilenceMasterAlarm}
+              onManualAction={handleManualAction}
+              onModuleAction={handleModuleAction}
+              onSwitchToProMode={() => setUiMode('pro')}
+              onOpenHandbook={() => handleNavigate('handbook')}
+              onReceiveCommSupply={handleReceiveCommSupply}
+            />
+          ) : (
+            <MissionControl
+              state={missionState}
+              onAdvanceSol={handleAdvanceSol}
+              onTogglePause={handleTogglePause}
+              onChangeSpeed={handleChangeSpeed}
+              onSilenceMasterAlarm={handleSilenceMasterAlarm}
+              onManualAction={handleManualAction}
+              onAbortMission={handleRestartMission}
+            />
+          )
         )}
 
         {phase === 'debrief' && missionState && (

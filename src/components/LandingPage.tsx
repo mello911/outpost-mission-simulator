@@ -43,9 +43,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="flex justify-center mb-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-space-900/90 border border-cyan-500/30 text-xs font-mono shadow-lg shadow-cyan-950/50">
             <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-            <span className="text-cyan-400 font-semibold">2026 NASA SPACE APPS CHALLENGE #03</span>
+            <span className="text-cyan-400 font-bold">2026 NASA SPACE APPS CHALLENGE #03</span>
             <span className="text-slate-500">•</span>
-            <span className="text-slate-300">Junior Astronaut Mission Trainer</span>
+            <span className="text-amber-300 font-bold">AGES 7–12 MISSION TRAINER</span>
           </div>
         </div>
 
@@ -58,8 +58,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-300 font-light leading-relaxed max-w-2xl mx-auto mb-8">
-            Step into the role of a NASA Flight Director. Construct a human settlement on the Moon or Mars, manage closed-loop life support, navigate solar particle storms, and guide your crew through extreme deep-space survival.
+          <p className="text-lg sm:text-xl text-slate-200 font-light leading-relaxed max-w-2xl mx-auto mb-8">
+            Can you keep your astronauts alive on Mars or the Moon? Step into NASA Mission Control! Build your extraterrestrial outpost, grow space potatoes, recycle drinking water, and survive massive solar dust storms with your robot pal <strong className="text-cyan-400 font-bold">A.S.T.R.O.</strong>!
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

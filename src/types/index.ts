@@ -222,9 +222,12 @@ export interface MissionScoreBreakdown {
   summaryFeedback: string;
 }
 
+export type UIMode = 'junior' | 'pro';
+
 export interface MissionState {
   id: string;
   phase: GamePhase;
+  uiMode?: UIMode;
   config: MissionSetupConfig;
   configuration: OutpostConfiguration;
   currentSol: number;

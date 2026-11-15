@@ -16,6 +16,8 @@ interface HeaderProps {
   currentPhase: GamePhase;
   currentSol?: number;
   destinationName?: string;
+  uiMode?: 'junior' | 'pro';
+  onToggleUIMode?: () => void;
   isMuted: boolean;
   setIsMuted: (muted: boolean) => void;
   ambientHumEnabled: boolean;
@@ -29,6 +31,8 @@ export const Header: React.FC<HeaderProps> = ({
   currentPhase,
   currentSol,
   destinationName,
+  uiMode = 'junior',
+  onToggleUIMode,
   isMuted,
   setIsMuted,
   ambientHumEnabled,
@@ -152,6 +156,19 @@ export const Header: React.FC<HeaderProps> = ({
             <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
             <span className="hidden md:inline">Science Archive</span>
           </button>
+
+          {currentPhase === 'live_simulation' && onToggleUIMode && (
+            <button
+              onClick={() => {
+                soundEngine.playBeep(650, 0.03);
+                onToggleUIMode();
+              }}
+              className="px-2.5 py-1.5 text-xs font-mono font-bold rounded-lg border border-cyan-500/40 bg-cyan-950/60 text-cyan-300 hover:bg-cyan-900/60 transition-colors flex items-center gap-1.5 shadow"
+              title={uiMode === 'junior' ? 'Switch to Flight Director Pro Telemetry Mode' : 'Switch to Junior Astronaut Mode'}
+            >
+              <span>{uiMode === 'junior' ? '🚀 Cadet Mode' : '🛰️ Pro Mode'}</span>
+            </button>
+          )}
 
           {currentPhase === 'live_simulation' && (
             <button
