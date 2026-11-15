@@ -1,0 +1,58 @@
+{
+  "name": "OUTPOST — Humanity's Next Home",
+  "short_name": "OUTPOST",
+  "description": "Realistic NASA Moon & Mars Outpost Survival & 3D Exploration Simulator.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "theme_color": "#0b0f19",
+  "background_color": "#000000",
+  "categories": [
+    "games",
+    "simulation",
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Quick Deploy Mars",
+      "short_name": "Quick Mars",
+      "description": "Instant drop into 3D Jezero Crater Outpost",
+      "url": "/?quick=mars",
+      "icons": [{ "src": "/icon-192.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Artemis Base Camp",
+      "short_name": "Artemis",
+      "description": "Lunar South Pole Expedition Sol 30",
+      "url": "/?scenario=artemis",
+      "icons": [{ "src": "/icon-192.svg", "sizes": "192x192" }]
+    }
+  ]
+}

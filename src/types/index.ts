@@ -224,6 +224,56 @@ export interface MissionScoreBreakdown {
 
 export type UIMode = 'junior' | 'pro';
 
+export interface GeologicalSample {
+  id: string;
+  name: string;
+  mineralType: 'hematite' | 'olivine' | 'perchlorate' | 'anorthosite' | 'ilmenite' | 'pyroclastic_glass' | 'water_ice';
+  colorHex: number;
+  description: string;
+  nasaFact: string;
+  scienceValue: number;
+  rarity: 'common' | 'rare' | 'exotic';
+  position: [number, number, number];
+  collected: boolean;
+}
+
+export interface DeployedScienceStation {
+  id: string;
+  name: string;
+  type: 'alsep_seismometer' | 'lems_weather' | 'retroreflector' | 'subsurface_radar';
+  position: [number, number, number];
+  deployedSol: number;
+  status: 'active' | 'transmitting';
+  scienceYieldPerSol: number;
+  nasaInstrument: string;
+}
+
+export interface SuitEVAState {
+  suitOxygenPct: number; // 0 - 100
+  suitBatteryPct: number; // 0 - 100
+  rcsFuelPct: number; // 0 - 100
+  warningLowO2: boolean;
+}
+
+export interface AstronautRankProgress {
+  currentXP: number;
+  level: number;
+  title: string;
+  nextLevelXP: number;
+}
+
+export interface DiscoveryCodexItem {
+  id: string;
+  title: string;
+  category: 'geology' | 'physics' | 'engineering' | 'isru' | 'history';
+  icon: string;
+  headline: string;
+  nasaMission: string;
+  scientificTruth: string;
+  howGameModelsIt: string;
+  unlockedAtSol?: number;
+}
+
 export interface MissionState {
   id: string;
   phase: GamePhase;

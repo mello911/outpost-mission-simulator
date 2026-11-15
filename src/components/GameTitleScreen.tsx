@@ -16,7 +16,8 @@ import {
   ChevronRight,
   ShieldCheck,
   Globe2,
-  Sparkles
+  Sparkles,
+  Trophy
 } from 'lucide-react';
 
 interface GameTitleScreenProps {
@@ -25,6 +26,7 @@ interface GameTitleScreenProps {
   onOpenHowToPlay: () => void;
   onOpenSettings: () => void;
   onOpenHandbook: () => void;
+  onOpenAchievements: () => void;
 }
 
 export const GameTitleScreen: React.FC<GameTitleScreenProps> = ({
@@ -33,6 +35,7 @@ export const GameTitleScreen: React.FC<GameTitleScreenProps> = ({
   onOpenHowToPlay,
   onOpenSettings,
   onOpenHandbook,
+  onOpenAchievements,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<TitleScene | null>(null);
@@ -82,6 +85,18 @@ export const GameTitleScreen: React.FC<GameTitleScreenProps> = ({
       action: () => {
         soundEngine.playLaunchTone();
         onQuickStart();
+      }
+    },
+    {
+      id: 'achievements',
+      label: 'NASA ACHIEVEMENTS & TROPHIES',
+      subtitle: 'CAREER MILESTONES & EXPLORATION XP',
+      icon: Trophy,
+      primary: false,
+      badge: 'TROPHIES',
+      action: () => {
+        soundEngine.playButtonClick();
+        onOpenAchievements();
       }
     },
     {

@@ -93,6 +93,7 @@ export const EducationalHandbook: React.FC<EducationalHandbookProps> = ({ onBack
           { id: 'power', label: 'Power & Kilopower' },
           { id: 'radiation', label: 'Radiation & Regolith' },
           { id: 'agriculture', label: 'Space Agriculture' },
+          { id: 'environment', label: 'Extraterrestrial Physics' },
           { id: 'psychology', label: 'Crew Isolation' }
         ].map(cat => (
           <button

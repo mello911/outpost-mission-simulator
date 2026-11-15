@@ -65,31 +65,31 @@ export const HowToPlayModal: React.FC<HowToPlayModalProps> = ({ onClose }) => {
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
               <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">SPACE</span>
-              <span className="text-slate-300">Low-G Jump & Jetpack</span>
+              <span className="text-slate-300">Low-G Jump & RCS Jetpack</span>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
               <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">E / TAP</span>
               <span className="text-slate-300">Interact & Field Action</span>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
-              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">C</span>
-              <span className="text-slate-300">Switch Camera (EVA/Rover)</span>
+              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">Q / TAB</span>
+              <span className="text-slate-300">AR Visor Scanner</span>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
-              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">F</span>
-              <span className="text-slate-300">Suit / Rover Light</span>
+              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">G</span>
+              <span className="text-slate-300">Throw Sample in Low-G</span>
+            </div>
+            <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
+              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">J</span>
+              <span className="text-slate-300">NASA Field Journal</span>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
               <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">SHIFT</span>
-              <span className="text-slate-300">Sprint / Turbo</span>
+              <span className="text-slate-300">Sprint / Turbo Boost</span>
             </div>
             <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
-              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">V</span>
-              <span className="text-slate-300">Telemetry Graphs</span>
-            </div>
-            <div className="bg-slate-900/90 border border-slate-800 p-2.5 rounded-xl flex flex-col items-center text-center">
-              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">ESC</span>
-              <span className="text-slate-300">Pause / Game Menu</span>
+              <span className="bg-slate-800 text-cyan-300 px-2 py-0.5 rounded font-bold mb-1">C</span>
+              <span className="text-slate-300">Camera (EVA/Rover/Drone)</span>
             </div>
           </div>
         </div>

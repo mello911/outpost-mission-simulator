@@ -1,3 +1,5 @@
+import { DiscoveryCodexItem } from '../types';
+
 export interface ScienceTopic {
   id: string;
   title: string;
@@ -244,5 +246,187 @@ export const NASA_SCIENCE_HANDBOOK: ScienceTopic[] = [
         org: 'NASA Human Research Program'
       }
     ]
+  },
+
+  {
+    id: 'physics_low_gravity',
+    title: 'Low-Gravity Kinematics & RCS Thrusters',
+    subtitle: 'Moon (0.166g) vs Mars (0.38g) vs Earth (1.0g)',
+    category: 'environment',
+    icon: 'Compass',
+    summary:
+      'Human muscles evolved to support our weight in Earth\'s 9.81 m/s² gravity. On the Moon (1.62 m/s²) and Mars (3.71 m/s²), jumping sends astronauts into long, floaty parabolic arcs. However, your mass and inertia (p = mv) remain completely unchanged!',
+    keyFacts: [
+      'Apollo astronauts discovered that normal walking causes tripping on the Moon because feet do not return to the ground quickly enough. They pioneered "kangaroo hopping" and "loping" to traverse regolith efficiently.',
+      'Because inertia is unchanged, stopping your horizontal momentum requires counter-thrusting or planting boots with friction.',
+      'EVA backpacks use Cold Gas Thrusters (compressed nitrogen) or Manned Maneuvering Units (MMU) with multi-directional nozzles (RCS) to provide translational and rotational delta-v.',
+      'A jump on the Moon lasts nearly 2.5 times longer and reaches 6 times higher than an identical leap on Earth.'
+    ],
+    realNasaFact:
+      'Apollo 14 commander Alan Shepard famously attached a 6-iron club head to an excavation tool handle and hit two golf balls on the lunar surface. Because of 0.166g and zero air resistance, the second ball flew for "miles and miles and miles"!',
+    gameplaySimplification:
+      'In OUTPOST, gravity accelerates you at 1.62 m/s² on the Moon and 3.71 m/s² on Mars. Mid-air RCS bursts consume nitrogen propellant from your suit backpack.',
+    equationsOrSpecs: [
+      {
+        label: 'Parabolic Jump Flight Time',
+        formula: 't_{air} = \\frac{2 v_0}{g}',
+        explanation: 'Time spent airborne is inversely proportional to planetary surface gravity g.'
+      },
+      {
+        label: 'Tsiolkovsky Rocket Equation for RCS Thrusters',
+        formula: '\\Delta v = I_{sp} \\cdot g_0 \\cdot \\ln\\left(\\frac{m_0}{m_f}\\right)',
+        explanation: 'Calculates the velocity change provided by cold-gas nitrogen propellant.'
+      }
+    ],
+    sources: [
+      {
+        title: 'NASA Apollo Lunar Surface Journal: Mobility and Locomotion',
+        url: 'https://www.hq.nasa.gov/alsj/',
+        org: 'NASA History Division'
+      }
+    ]
+  },
+
+  {
+    id: 'geology_isru_minerals',
+    title: 'Planetary Geology & In-Situ Spectrometry',
+    subtitle: 'Extracting Oxygen from Ilmenite & Water from Permafrost',
+    category: 'life_support',
+    icon: 'Sparkles',
+    summary:
+      'Every kilogram lifted into orbit costs thousands of dollars. The core philosophy of deep-space exploration is Living Off the Land—In-Situ Resource Utilization (ISRU). Astronauts use X-ray fluorescence (PIXL) and Raman lasers (SHERLOC) to identify resource-rich minerals.',
+    keyFacts: [
+      'Lunar Ilmenite (FeTiO₃) can be reduced with hydrogen gas at 900°C to extract metallic iron, titanium dioxide, and pure water/oxygen.',
+      'Martian Hematite "blueberries" are small spherical iron oxide concretions discovered by NASA Opportunity, proving ancient liquid water soaked the Martian plains.',
+      'Volatile water ice resides inside permanently shadowed craters (PSRs) at the lunar South Pole at cryogenic temperatures of 40 Kelvin (-233°C).',
+      'Perchlorates (ClO₄⁻) on Mars can be broken down using thermocatalytic reactors to liberate pure oxygen gas for habitat breathing and rocket oxidizer.'
+    ],
+    realNasaFact:
+      'The PIXL instrument on NASA Perseverance uses a high-energy X-ray beam to map the elemental composition of rocks at the sub-millimeter scale, determining if Martian formations were deposited by ancient habitable lakes.',
+    gameplaySimplification:
+      'In OUTPOST, players scan surface geodes with the multispectral visor and drill volatile ice pockets to bolster potable water and earn scientific research points.',
+    equationsOrSpecs: [
+      {
+        label: 'Ilmenite Hydrogen Reduction Reaction',
+        formula: 'FeTiO_3 + H_2 \\to Fe + TiO_2 + H_2O',
+        explanation: 'Yields pure liquid water and structural titanium/iron from common lunar mare basalt.'
+      }
+    ],
+    sources: [
+      {
+        title: 'NASA JPL: PIXL on Perseverance Mars 2020',
+        url: 'https://mars.nasa.gov/mars2020/spacecraft/instruments/pixl/',
+        org: 'NASA Jet Propulsion Laboratory'
+      }
+    ]
+  },
+
+  {
+    id: 'martian_blue_sunset',
+    title: 'Atmospheric Optics & The Martian Blue Sunset',
+    subtitle: 'Why Martian Skies Turn Blue at Twilight',
+    category: 'environment',
+    icon: 'Sun',
+    summary:
+      'On Earth, daytime skies are blue and sunsets are red due to Rayleigh scattering from tiny nitrogen and oxygen molecules. On Mars, the atmospheric optical physics are completely reversed!',
+    keyFacts: [
+      'The Martian atmosphere is very thin (0.6% of Earth\'s) and heavily saturated with fine suspended magnetite and hematite dust particles (~1.5 micrometers in size).',
+      'During the Martian day, fine dust particles absorb blue wavelengths and scatter yellow, amber, and butterscotch-red light across the sky.',
+      'At twilight and sunset, sunlight travels through a much thicker path of atmospheric dust. The dust particles forward-scatter blue light via Mie scattering, creating an eerie, glowing blue halo around the setting Sun.',
+      'NASA Viking 1 in 1976 and the Spirit, Opportunity, Curiosity, and Perseverance rovers have all captured breathtaking color photographs of blue Martian sunsets.'
+    ],
+    realNasaFact:
+      'Curiosity took one of the most famous photographs in space history on April 15, 2015: a four-image sequence of a cold blue Sun sinking behind the crater rim of Gale Crater.',
+    gameplaySimplification:
+      'OUTPOST simulates the real-time celestial arc of the Sun. As Sol progress toward twilight on Mars, the sky dynamically transitions to an authentic blue-hazed twilight!',
+    equationsOrSpecs: [
+      {
+        label: 'Mie Scattering Parameter',
+        formula: 'x = \\frac{2 \\pi r}{\\lambda}',
+        explanation: 'When particle size r is comparable to light wavelength \\lambda, light is scattered predominantly in the forward direction.'
+      }
+    ],
+    sources: [
+      {
+        title: 'NASA JPL: Why Sunsets on Mars Look Blue',
+        url: 'https://www.jpl.nasa.gov/news/what-does-a-sunset-on-mars-look-like',
+        org: 'NASA Jet Propulsion Laboratory'
+      }
+    ]
+  }
+];
+
+export const DISCOVERY_CODEX_DATA: DiscoveryCodexItem[] = [
+  {
+    id: 'codex_hematite',
+    title: 'Martian Hematite Concretions ("Blueberries")',
+    category: 'geology',
+    icon: '🔴',
+    headline: 'Iron Oxide Spheres Proving Ancient Water',
+    nasaMission: 'NASA Opportunity Rover (2004, Meridiani Planum)',
+    scientificTruth:
+      'These millimeter-sized spherules of crystalline gray hematite formed billions of years ago when groundwater saturated with dissolved iron percolated through porous sedimentary rock.',
+    howGameModelsIt:
+      'Scan and collect hematite geodes across the crater basin to unlock geological science points and study ancient planetary hydrology.'
+  },
+  {
+    id: 'codex_ilmenite',
+    title: 'Lunar Ilmenite Ore (Titanium-Iron Oxide)',
+    category: 'isru',
+    icon: '🌑',
+    headline: 'The Goldmine for Lunar Oxygen & Titanium',
+    nasaMission: 'Apollo 11 & Apollo 17 Lunar Samples (1969-1972)',
+    scientificTruth:
+      'Ilmenite (FeTiO₃) comprises up to 20% of lunar mare basalt. When heated to 900°C with hydrogen, oxygen bonds are stripped to produce pure H₂O, releasing metallic iron and titanium.',
+    howGameModelsIt:
+      'Collect ilmenite rocks to replenish oxygen reserves and earn advanced astronaut engineering XP.'
+  },
+  {
+    id: 'codex_permafrost',
+    title: 'Cryogenic Volatile Ice Cores',
+    category: 'isru',
+    icon: '🧊',
+    headline: 'Preserved Water at 40 Kelvin in Shadowed Craters',
+    nasaMission: 'NASA LCROSS Impactor & Lunar Reconnaissance Orbiter (LRO)',
+    scientificTruth:
+      'At the lunar South Pole (Shackleton Crater), sunlight never reaches the crater floors. Volatiles delivered by billions of years of cometary bombardment remain trapped as ice.',
+    howGameModelsIt:
+      'Precision-drill subsurface ice pockets using the resonant drill minigame to harvest potable water for the outpost life support system.'
+  },
+  {
+    id: 'codex_alsep',
+    title: 'ALSEP / LEMS Surface Science Station',
+    category: 'engineering',
+    icon: '📡',
+    headline: 'Autonomous Long-Duration Surface Observatories',
+    nasaMission: 'Apollo 12-17 ALSEP & Artemis III LEMS',
+    scientificTruth:
+      'Apollo Lunar Surface Experiments Packages (ALSEP) operated for up to 8 years on nuclear SNAP-27 RTGs, transmitting moonquake, solar wind, and atmospheric data back to Earth.',
+    howGameModelsIt:
+      'Carry the deployable ALSEP station from your outpost and erect it on a high crater ridge to generate continuous daily scientific data streams.'
+  },
+  {
+    id: 'codex_blue_sunset',
+    title: 'The Martian Blue Twilight Phenomenon',
+    category: 'physics',
+    icon: '🌅',
+    headline: 'Inverted Atmospheric Optical Scattering',
+    nasaMission: 'NASA Viking, Spirit, Opportunity, Curiosity & Perseverance',
+    scientificTruth:
+      'Fine airborne Martian dust absorbs blue light during midday, but forward-scatters blue photons directly toward observers at sunset due to Mie scattering geometry.',
+    howGameModelsIt:
+      'Experience dynamic day-to-night transitions where the sky turns from butterscotch amber to a cold, breathtaking Martian blue at twilight.'
+  },
+  {
+    id: 'codex_rover_mobility',
+    title: 'Planetary Rover Suspension & Regolith Slip',
+    category: 'engineering',
+    icon: '🚙',
+    headline: 'Rocker-Bogie Dynamics & Electrostatic Wheel Traction',
+    nasaMission: 'Apollo Lunar Roving Vehicle (LRV) & Curiosity Rover',
+    scientificTruth:
+      'Rovers cannot rely on high-speed tires; Apollo LRVs used woven zinc-coated steel wire mesh with titanium chevrons for grip on loose, razor-sharp abrasive regolith.',
+    howGameModelsIt:
+      'Drive the pressurized exploration rover with realistic chassis tilt conforming to crater slopes, momentum inertia, regolith drift, and capacitor turbo boost.'
   }
 ];

@@ -47,22 +47,38 @@ Allocate a **$120 Million USD** payload budget across 6 vital life support syste
 5. **Agriculture & Food**: Lyophilized Packaged Rations vs NFT Hydroponic Greenhouse vs Closed-Loop Aeroponic Vertical Array + Spirulina Vats.
 6. **Water Reclamation**: Condensate Graywater Loop vs Vapor Compression Distillation (VCD) vs 2023 ISS-milestone 98% Brine Processor Assembly (BPA).
 
-### 4. 🎮 Interactive 3D Planetary Game & EVA Engine
-- **Full 3D Planetary Surface**: Real-time rendering of your constructed outpost on Mars or the Moon using an ultra-optimized Three.js engine.
-- **Low-End Hardware & 4GB RAM Optimization**:
-  - Memory footprint under **25 MB RAM** (procedural geometries, runtime canvas textures, 0 heavy GLTF download overhead).
-  - Built-in **Graphics Quality Modes** (`4GB LOW`, `MED`, `HIGH`) with locked 60 FPS performance on Chromebooks, budget laptops, and Intel HD graphics.
-- **Playable Character & Vehicle Modes**:
-  - 🧑‍🚀 **Astronaut EVA Mode**: Third-person astronaut controls with realistic low-gravity jumps (`0.38g` on Mars, `0.166g` on Moon), RCS jetpack thruster bursts, and suit flashlights.
-  - 🚗 **Planetary Rover Drive Mode**: Hop into the 6-wheel pressurized exploration rover to traverse distant crater ridges at high speed.
-  - 🛰️ **Tactical Flight Director Drone View**: 360-degree free orbital camera to inspect outpost modules.
-- **Hands-On Physical Field Operations**:
-  - 🧹 **Solar Array Cleaning**: Walk up to solar panels and press `[E]` to brush off regolith dust grit, boosting power production.
-  - 🛡️ **Airlock & Hull Maintenance**: Repair micrometeorite breaches with the welding torch.
-  - 🌱 **Greenhouse Agriculture**: Tend hydroponic vegetables to harvest food calories.
-  - 💧 **ISRU Ice Pocket Drilling**: Discover and core-drill volatile glacial deposits for fresh water reserves.
-  - 🚨 **Emergency Storm Evacuation**: Run to the airlock shelter when radiation solar flares or dust storms strike!
-- **Unified Telemetry Terminal (`[V]` Key)**: Instantly slide open full NASA Flight Director telemetry graphs without leaving the 3D surface.
+### 4. 🎮 Upgraded 3D Planetary Physics & Interactive EVA Engine
+- **Extraterrestrial Low-Gravity Kinematics**:
+  - True ballistic arcs and floaty jumps ($0.38g$ on Mars, $0.166g$ on Moon).
+  - **Cold-Gas RCS Jetpack Flight**: Hold `[Space]` while airborne for vertical thrust; press `[Shift]` for forward jetpack thrust with particle exhaust and nitrogen propellant consumption!
+  - **Slope & Regolith Slip Physics**: Slopes $>25^\circ$ cause gravitational sliding with regolith friction and dust puffs.
+- **6-Wheel Exploration Rover with Physics Dynamics**:
+  - Independent terrain normal alignment: chassis dynamically tilts in pitch and roll to conform to crater slopes.
+  - 6 spinning wheels with front wheel steering angles and regolith drift.
+  - **Capacitor Turbo Boost (`[Shift]`)**: Fire rear thrusters for high-speed traversal across distant crater ridges with blue plasma plumes and rooster-tail dust trails!
+  - Dual high-beam headlights illuminating dark crater basins.
+- **Interactive Geological Specimens & Physics Projectiles**:
+  - Scattered crystal/rock formations (Hematite Blueberries, Titanium Ilmenite Ore, Olivine Basalt, Volcanic Pyroclastic Glass, Cryo-Ice).
+  - Inspect with handheld PIXL X-Ray Fluorescence spectrometer (`[E]`), collect for research XP, or **throw into low-gravity flight (`[G]`)** to observe parabolic bouncing and slope rolling!
+- **Deployable ALSEP / LEMS Surface Science Package**:
+  - Carry the deployable science observatory from base to high crater ridges (>22m) and deploy (`[E]`) to unfurl solar wings and broadcast continuous seismic/weather telemetry (+250 XP).
+- **Orbital Resupply Drop Capsule**:
+  - Emergency drop capsules landing in crater basins that can be salvaged (`[E]`) for auxiliary fuel cells, water filters, and hull repair nanogel.
+- **Resonant Rotary Cryo-Drill Minigame**:
+  - Drill subsurface ice pockets with an interactive tachometer: pulse drill torque into the green "Sweet Spot" harmonic zone (45%-75%) while keeping sublimation temperature low to prevent water loss!
+- **Multispectral AR Visor Scanner (`[Q]` / `[Tab]`)**:
+  - Sci-fi visor overlay showing real-time GPS coordinates, elevation above datum, compass heading azimuth (0-360°), and mineral chemical compositions.
+- **Dynamic Sol Day / Night Cycle & The Martian Blue Sunset**:
+  - Dynamic sun arc across the planetary dome.
+  - Mars: Warm midday ochre transitioning to an authentic **blue sunset** (Mie forward scattering by atmospheric dust, as discovered by NASA Viking, Curiosity, and Perseverance!).
+  - Moon: Harsh stark shadows and deep void night with glowing blue marble Earth floating overhead.
+  - Station exterior beacons and suit/rover headlights automatically illuminate in darkness.
+- **Dynamic Environmental Hazards**:
+  - Procedural swirling Dust Devils / Electrostatic Vortices that physically pull astronauts and rovers with aerodynamic drag.
+  - Hypersonic micrometeorite streaks with distant impact plumes and subterranean rumbling.
+- **Surface Field Journal & NASA Codex (`[J]`)**:
+  - 5-tier Astronaut Rank XP progression (Cadet Surveyor -> Planetary Geologist -> Systems Specialist -> Senior Commander -> Artemis/Ares Pioneer Legend).
+  - Interactive codex entries with real NASA mission references (Apollo 11-17, Opportunity, Perseverance, Artemis).
 
 ### 5. 🤖 Junior Astronaut Features & A.S.T.R.O. Robot Guide
 - **A.S.T.R.O. Friendly Robotic Companion**: An animated robot with expressive eyes and speech bubbles that translates complex aerospace engineering into fun, kid-friendly mission tips and space facts.

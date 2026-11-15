@@ -27,6 +27,7 @@ import { EducationalHandbook } from './components/EducationalHandbook';
 import { EventModal } from './components/EventModal';
 import { HowToPlayModal } from './components/HowToPlayModal';
 import { GameSettingsModal } from './components/GameSettingsModal';
+import { AchievementsModal } from './components/AchievementsModal';
 import { GraphicsQuality } from './game3d/OutpostScene';
 
 export function App() {
@@ -36,6 +37,7 @@ export function App() {
   // Modals
   const [showHowToPlay, setShowHowToPlay] = useState<boolean>(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [showAchievements, setShowAchievements] = useState<boolean>(false);
 
   // Settings state
   const [isMuted, setIsMuted] = useState<boolean>(false);
@@ -270,6 +272,7 @@ export function App() {
             setPreviousPhase(phase);
             setPhase('handbook');
           }}
+          onOpenAchievements={() => setShowAchievements(true)}
         />
       )}
 
@@ -349,6 +352,12 @@ export function App() {
           onClose={() => setShowSettings(false)}
         />
       )}
+
+      {/* ACHIEVEMENTS MODAL */}
+      <AchievementsModal
+        isOpen={showAchievements}
+        onClose={() => setShowAchievements(false)}
+      />
 
     </div>
   );
