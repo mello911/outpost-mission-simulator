@@ -234,6 +234,318 @@ class SoundEngine {
       // ignore
     }
   }
+
+  /**
+   * 3D Astronaut Footstep on regolith (dull, muffled low thump)
+   */
+  public playFootstep() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(90 + Math.random() * 20, now);
+      osc.frequency.exponentialRampToValueAtTime(30, now + 0.07);
+
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.07);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * 3D Jetpack / RCS Thruster puff (filtered white noise burst)
+   */
+  public playJetpackBurst() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const bufferSize = this.ctx.sampleRate * 0.15;
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.Q.setValueAtTime(1.5, now);
+
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      noise.start(now);
+      noise.stop(now + 0.15);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * 3D Interaction affirmative chirp (cleaning, harvesting, patching)
+   */
+  public playInteract() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc1 = this.ctx.createOscillator();
+      const osc2 = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc1.type = 'sine';
+      osc2.type = 'triangle';
+      osc1.frequency.setValueAtTime(1200, now);
+      osc1.frequency.setValueAtTime(1600, now + 0.07);
+      osc2.frequency.setValueAtTime(800, now);
+      osc2.frequency.setValueAtTime(1000, now + 0.07);
+
+      gain.gain.setValueAtTime(0.07, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+
+      osc1.connect(gain);
+      osc2.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc1.start(now);
+      osc2.start(now);
+      osc1.stop(now + 0.16);
+      osc2.stop(now + 0.16);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * 3D Geological Drill sound (high tech vibratory pulse)
+   */
+  public playDrill() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.linearRampToValueAtTime(440, now + 0.25);
+      osc.frequency.linearRampToValueAtTime(180, now + 0.4);
+
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.4);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * 3D EVA Welding / Repair Sparks sound
+   */
+  public playWelding() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(350, now);
+      osc.frequency.exponentialRampToValueAtTime(120, now + 0.2);
+
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.22);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Game UI Button Hover Sound (Crisp, subtle sci-fi tick)
+   */
+  public playButtonHover() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1250, now);
+
+      gain.gain.setValueAtTime(0.025, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.025);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.025);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Game UI Button Click / Selection (Firm sci-fi arcade confirmation)
+   */
+  public playButtonClick() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(580, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.06);
+
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Dramatic Expedition Launch Sound (Thruster ignition & ascending chord)
+   */
+  public playLaunchTone() {
+    if (this.isMuted) return;
+    this.initContext();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const freqs = [220, 277.18, 329.63, 440, 554.37]; // A major arpeggio
+      freqs.forEach((freq, i) => {
+        const osc = this.ctx!.createOscillator();
+        const gain = this.ctx!.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, now + i * 0.1);
+
+        gain.gain.setValueAtTime(0.06, now + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.5);
+
+        osc.connect(gain);
+        gain.connect(this.ctx!.destination);
+
+        osc.start(now + i * 0.1);
+        osc.stop(now + i * 0.1 + 0.5);
+      });
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * Ambient Space Theme Music (Subtle pulsing chords)
+   */
+  private bgmOscs: OscillatorNode[] = [];
+  private bgmGain: GainNode | null = null;
+  private isBgmPlaying = false;
+
+  public toggleSpaceBgm(enable: boolean) {
+    this.initContext();
+    if (!this.ctx) return;
+
+    if (!enable || this.isMuted) {
+      this.bgmOscs.forEach(osc => {
+        try {
+          osc.stop();
+          osc.disconnect();
+        } catch {
+          // ignore
+        }
+      });
+      this.bgmOscs = [];
+      this.isBgmPlaying = false;
+      return;
+    }
+
+    if (this.isBgmPlaying) return;
+
+    try {
+      this.bgmGain = this.ctx.createGain();
+      this.bgmGain.gain.setValueAtTime(0.02, this.ctx.currentTime); // gentle background level
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(320, this.ctx.currentTime);
+
+      const notes = [110, 164.81, 220, 329.63]; // A minor ambient drone
+      this.bgmOscs = notes.map(freq => {
+        const osc = this.ctx!.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq + (Math.random() - 0.5) * 1.5, this.ctx!.currentTime);
+        osc.connect(filter);
+        osc.start();
+        return osc;
+      });
+
+      filter.connect(this.bgmGain);
+      this.bgmGain.connect(this.ctx.destination);
+      this.isBgmPlaying = true;
+    } catch {
+      // ignore
+    }
+  }
 }
 
 export const soundEngine = new SoundEngine();

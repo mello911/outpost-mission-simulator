@@ -22,12 +22,14 @@ interface MissionDebriefProps {
   state: MissionState;
   onRestart: () => void;
   onOpenHandbook: () => void;
+  onExitToTitle?: () => void;
 }
 
 export const MissionDebrief: React.FC<MissionDebriefProps> = ({
   state,
   onRestart,
   onOpenHandbook,
+  onExitToTitle,
 }) => {
   const isVictory = state.missionOutcome === 'success';
   const score: MissionScoreBreakdown = state.scoreBreakdown || {
@@ -285,8 +287,20 @@ export const MissionDebrief: React.FC<MissionDebriefProps> = ({
             className="w-full sm:w-auto px-6 py-3 rounded-xl font-mono font-bold tracking-wider text-space-950 bg-gradient-to-r from-cyan-400 to-amber-300 hover:from-cyan-300 hover:to-amber-200 shadow-xl shadow-cyan-500/30 flex items-center justify-center gap-2 text-xs transition-all"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>NEW MISSION</span>
+            <span>PLAY AGAIN</span>
           </button>
+
+          {onExitToTitle && (
+            <button
+              onClick={() => {
+                soundEngine.playButtonClick();
+                onExitToTitle();
+              }}
+              className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:border-slate-500 text-slate-300 font-mono text-xs flex items-center justify-center gap-2 transition-colors"
+            >
+              <span>MAIN MENU</span>
+            </button>
+          )}
         </div>
       </div>
 

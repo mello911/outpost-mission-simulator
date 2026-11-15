@@ -47,21 +47,40 @@ Allocate a **$120 Million USD** payload budget across 6 vital life support syste
 5. **Agriculture & Food**: Lyophilized Packaged Rations vs NFT Hydroponic Greenhouse vs Closed-Loop Aeroponic Vertical Array + Spirulina Vats.
 6. **Water Reclamation**: Condensate Graywater Loop vs Vapor Compression Distillation (VCD) vs 2023 ISS-milestone 98% Brine Processor Assembly (BPA).
 
-### 4. 🎮 Junior Astronaut Mode (Ages 7–12) & Interactive Outpost
-- **Interactive Visual Outpost Canvas**: A vibrant 2D cross-section outpost environment featuring the Main Pressurized Habitat Dome, Aeroponic Greenhouse, Solar Arrays / Kilopower Nuclear, Water Recycling Vessel, and Surface Exploration Rover.
-- **Clickable Module Inspections & Micro-Actions**:
-  - *Greenhouse*: Water crops and harvest fresh microgreens (+caloric yield & crew morale).
-  - *Solar Grid*: Brush away abrasive Martian dust to restore peak photovoltaic output.
-  - *Water Recycler*: Flush the centrifuge filter to optimize 98% closed-loop recovery.
-  - *Main Habitat*: Inspect airlocks and patch hull micro-stress.
-  - *Surface Rover*: Deploy rover on ground-penetrating radar ice-scouting drives.
+### 4. 🎮 Interactive 3D Planetary Game & EVA Engine
+- **Full 3D Planetary Surface**: Real-time rendering of your constructed outpost on Mars or the Moon using an ultra-optimized Three.js engine.
+- **Low-End Hardware & 4GB RAM Optimization**:
+  - Memory footprint under **25 MB RAM** (procedural geometries, runtime canvas textures, 0 heavy GLTF download overhead).
+  - Built-in **Graphics Quality Modes** (`4GB LOW`, `MED`, `HIGH`) with locked 60 FPS performance on Chromebooks, budget laptops, and Intel HD graphics.
+- **Playable Character & Vehicle Modes**:
+  - 🧑‍🚀 **Astronaut EVA Mode**: Third-person astronaut controls with realistic low-gravity jumps (`0.38g` on Mars, `0.166g` on Moon), RCS jetpack thruster bursts, and suit flashlights.
+  - 🚗 **Planetary Rover Drive Mode**: Hop into the 6-wheel pressurized exploration rover to traverse distant crater ridges at high speed.
+  - 🛰️ **Tactical Flight Director Drone View**: 360-degree free orbital camera to inspect outpost modules.
+- **Hands-On Physical Field Operations**:
+  - 🧹 **Solar Array Cleaning**: Walk up to solar panels and press `[E]` to brush off regolith dust grit, boosting power production.
+  - 🛡️ **Airlock & Hull Maintenance**: Repair micrometeorite breaches with the welding torch.
+  - 🌱 **Greenhouse Agriculture**: Tend hydroponic vegetables to harvest food calories.
+  - 💧 **ISRU Ice Pocket Drilling**: Discover and core-drill volatile glacial deposits for fresh water reserves.
+  - 🚨 **Emergency Storm Evacuation**: Run to the airlock shelter when radiation solar flares or dust storms strike!
+- **Unified Telemetry Terminal (`[V]` Key)**: Instantly slide open full NASA Flight Director telemetry graphs without leaving the 3D surface.
+
+### 5. 🤖 Junior Astronaut Features & A.S.T.R.O. Robot Guide
 - **A.S.T.R.O. Friendly Robotic Companion**: An animated robot with expressive eyes and speech bubbles that translates complex aerospace engineering into fun, kid-friendly mission tips and space facts.
-- **Interplanetary Communication Delay Relay**: A real gameplay mechanic demonstrating light-speed radio propagation across 225,000,000 km between Earth and Mars ($300,000\text{ km/s}$), with a scaled countdown timer and Houston supply uplinks.
-- **Dual Gameplay Modes**: Toggle anytime between **🚀 Junior Cadet Mode** (visual outpost, friendly gauges, A.S.T.R.O.) and **🛰️ Flight Director Pro Mode** (Recharts telemetry, C&W matrix, quantitative data).
+- **Interplanetary Communication Delay Relay**: Demonstrates light-speed radio propagation across 225,000,000 km between Earth and Mars ($300,000\text{ km/s}$), with countdown timers and Houston supply uplinks.
 
-### 5. 📊 Live Mission Control Telemetry (Pro Mode)
+### 6. 📊 Live Mission Control Telemetry
+- Authentic Apollo / Shuttle / Orion inspired **Master Caution & Warning (C&W)** annunciator matrix (`O₂ SYS`, `H₂O REC`, `POWER`, `HULL PRES`, `RAD ALARM`, `CREW MED`).
+- Telemetry gauges with Sol burn rates and days-remaining forecasts:
+  - **Oxygen (kg)**: Daily consumption (0.84 kg/astronaut/Sol) vs MOXIE production.
+  - **Water (Liters)**: 2.8 L/astronaut/Sol vs ECLSS recycling percentage recovery.
+  - **Food (kcal)**: 2,800 kcal/astronaut/Sol vs greenhouse harvest cycles.
+  - **Power (kWh / kW)**: Battery storage, net generation vs load, solar dust attenuation factor.
+  - **Habitat Structural Integrity (%)**: Micrometeorite abrasions and thermal stress.
+  - **Radiation Cumulative Dose (mSv)**: Compared against the NASA 600 mSv career limit.
+- Interactive **Recharts** multi-stream telemetry visualizations (Consumables, Power Grid, Crew Vitals, Radiation Trends).
+- Live timestamped **CAPCOM Communication Feed**.
 
-### 5. ⚠️ Authentic Tactical Crisis Events
+### 7. ⚠️ Authentic Tactical Crisis Events
 Encounter real deep-space emergencies with multi-choice operational decisions and scientific explanations:
 - *Martian Global Dust Storm Warning* (tau > 2.8 load-shedding vs electrostatic repulsion).
 - *Coronal Mass Ejection: Solar Particle Event (SPE)* (water storm shelter vs magnetic overclock).
@@ -70,14 +89,14 @@ Encounter real deep-space emergencies with multi-choice operational decisions an
 - *Micrometeorite Hypervelocity Puncture Alert* (acoustic leak detection vs robotic patch).
 - *Subsurface Glacial Ice Pocket Detected* (thermal mining drill vs astrobiological core sampling).
 
-### 6. 🏆 Mission Results & Scientific Debriefing
+### 8. 🏆 Mission Results & Scientific Debriefing
 - 10,000-point 4-pillar evaluation: Crew Survival (40%), Resource Efficiency (25%), Engineering Stability (20%), Crisis & Science (15%).
 - NASA Career Rank & Badge awards (*Flight Director Emeritus*, *Senior Mission Commander*, *Outpost Systems Specialist*, *Junior Planetary Pioneer*).
 - Real NASA Program correlation analysis.
 - One-click JSON **Mission Log Report Export**.
 - Persistent high-score leaderboard via browser `LocalStorage`.
 
-### 7. 📖 NASA Science Handbook & Field Manual
+### 9. 📖 NASA Science Handbook & Field Manual
 - Comprehensive interactive educational guide covering:
   - Why Mars is difficult to inhabit (atmospheric pressure below Armstrong limit, perchlorates, communication lag).
   - Why radiation shielding matters (GCR vs SPE, secondary neutron cascades, hydrogen stopping power).

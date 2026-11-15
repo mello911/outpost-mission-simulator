@@ -40,12 +40,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 relative z-10 w-full">
         
         {/* Challenge Banner */}
-        <div className="flex justify-center mb-6">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-space-900/90 border border-cyan-500/30 text-xs font-mono shadow-lg shadow-cyan-950/50">
             <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
             <span className="text-cyan-400 font-bold">2026 NASA SPACE APPS CHALLENGE #03</span>
             <span className="text-slate-500">•</span>
             <span className="text-amber-300 font-bold">AGES 7–12 MISSION TRAINER</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-xs font-mono text-emerald-300">
+            <span>🎮 NEW: Interactive 3D Planetary EVA</span>
+            <span className="text-slate-500">•</span>
+            <span>⚡ Ultra-Light (Runs on 4GB RAM / Low-End Laptops)</span>
           </div>
         </div>
 
@@ -272,14 +278,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <div className="w-10 h-10 rounded-lg bg-blue-950/80 border border-blue-500/30 flex items-center justify-center text-blue-400 font-mono font-bold text-lg mb-4">
                   03
                 </div>
-                <h4 className="font-display font-bold text-white text-base mb-2">Live Telemetry</h4>
+                <h4 className="font-display font-bold text-white text-base mb-2">3D Surface Game</h4>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Advance Sol by Sol. Monitor real-time rates for oxygen, water recycling, food calorie balance, power, and radiation.
+                  Walk in low gravity, drive the planetary rover, clear dust from solar panels, seal hull breaches, and drill water ice pockets.
                 </p>
               </div>
               <div className="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-blue-400 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Mathematical Engine</span>
+                <span>Interactive 3D + Telemetry</span>
               </div>
             </div>
 

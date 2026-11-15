@@ -3,11 +3,9 @@ import {
   GamePhase, 
   MissionSetupConfig, 
   OutpostConfiguration, 
-  MissionState,
-  UIMode 
+  MissionState 
 } from './types';
 import { CREW_PRESETS } from './data/crew';
-import { DESTINATIONS } from './data/destinations';
 import { 
   initializeMissionState, 
   simulateOneSol, 
@@ -20,55 +18,48 @@ import {
 } from './utils/storage';
 import { soundEngine } from './utils/audio';
 
-import { Header } from './components/Header';
-import { LandingPage } from './components/LandingPage';
-import { MissionSetup } from './components/MissionSetup';
-import { OutpostConstruction } from './components/OutpostConstruction';
-import { JuniorMissionControl } from './components/JuniorMissionControl';
-import { MissionControl } from './components/MissionControl';
-import { EventModal } from './components/EventModal';
+// Clean Webgame Components
+import { GameTitleScreen } from './components/GameTitleScreen';
+import { GameMissionSelect } from './components/GameMissionSelect';
+import { Outpost3DGame } from './components/Outpost3DGame';
 import { MissionDebrief } from './components/MissionDebrief';
 import { EducationalHandbook } from './components/EducationalHandbook';
+import { EventModal } from './components/EventModal';
+import { HowToPlayModal } from './components/HowToPlayModal';
+import { GameSettingsModal } from './components/GameSettingsModal';
+import { GraphicsQuality } from './game3d/OutpostScene';
 
 export function App() {
   const [phase, setPhase] = useState<GamePhase>('landing');
   const [previousPhase, setPreviousPhase] = useState<GamePhase>('landing');
-  const [uiMode, setUiMode] = useState<UIMode>('junior');
-  
-  // Mission configuration
-  const [setupConfig, setSetupConfig] = useState<MissionSetupConfig>({
-    destination: 'mars',
-    crewSize: 4,
-    crewRoster: CREW_PRESETS.slice(0, 4),
-    targetSolDuration: 60,
-    startingBudgetMillionUSD: 120,
-  });
 
-  const [missionState, setMissionState] = useState<MissionState | null>(null);
+  // Modals
+  const [showHowToPlay, setShowHowToPlay] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+
+  // Settings state
   const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [ambientHumEnabled, setAmbientHumEnabled] = useState<boolean>(false);
+  const [ambientHumEnabled, setAmbientHumEnabled] = useState<boolean>(true);
+  const [bgmEnabled, setBgmEnabled] = useState<boolean>(false);
+  const [quality, setQuality] = useState<GraphicsQuality>('low');
+
+  // Mission State
+  const [missionState, setMissionState] = useState<MissionState | null>(null);
 
   // Restore game from LocalStorage on first load if available
   useEffect(() => {
     const saved = loadMissionFromStorage();
     if (saved && !saved.isMissionOver && saved.currentSol > 1) {
       setMissionState(saved);
-      setSetupConfig(saved.config);
-      if (saved.uiMode) {
-        setUiMode(saved.uiMode);
-      }
     }
   }, []);
 
   // Autosave to LocalStorage when simulation state updates
   useEffect(() => {
     if (missionState && missionState.phase === 'live_simulation') {
-      saveMissionToStorage({
-        ...missionState,
-        uiMode
-      });
+      saveMissionToStorage(missionState);
     }
-  }, [missionState, uiMode]);
+  }, [missionState]);
 
   // Simulation timer loop
   useEffect(() => {
@@ -100,20 +91,30 @@ export function App() {
     return () => clearInterval(timer);
   }, [phase, missionState?.isPaused, missionState?.simulationSpeed, missionState?.activeCrisis, missionState?.isMissionOver]);
 
-  // Navigation handlers
-  const handleStartMission = () => {
-    setPhase('setup');
-  };
-
-  const handleProceedToConstruction = (config: MissionSetupConfig) => {
-    setSetupConfig(config);
-    setPhase('construction');
-  };
-
-  const handleLaunchOutpost = (configuration: OutpostConfiguration) => {
+  // Launch handlers
+  const handleLaunchMission = (setupConfig: MissionSetupConfig, configuration: OutpostConfiguration) => {
     const freshState = initializeMissionState(setupConfig, configuration);
     setMissionState(freshState);
     setPhase('live_simulation');
+  };
+
+  const handleQuickStart = () => {
+    const quickSetupConfig: MissionSetupConfig = {
+      destination: 'mars',
+      crewSize: 4,
+      crewRoster: CREW_PRESETS.slice(0, 4),
+      targetSolDuration: 30,
+      startingBudgetMillionUSD: 120,
+    };
+    const quickConfiguration: OutpostConfiguration = {
+      habitat: 'hab_transhab',
+      life_support: 'ls_sabatier_moxie',
+      power: 'pow_solar_fuel_cell',
+      radiation: 'rad_polyethylene_water',
+      food: 'food_hydroponic_greenhouse',
+      water: 'wat_vapor_compression',
+    };
+    handleLaunchMission(quickSetupConfig, quickConfiguration);
   };
 
   const handleAdvanceSol = () => {
@@ -201,107 +202,35 @@ export function App() {
     });
   };
 
-  const handleModuleAction = (actionType: 'clean_solar' | 'tend_crops' | 'flush_water' | 'inspect_hab' | 'rover_scout') => {
-    if (!missionState) return;
-
+  const handleAddResource = (
+    type: 'water' | 'food' | 'energy' | 'oxygen' | 'integrity',
+    amount: number,
+    logMsg: string
+  ) => {
     setMissionState(prev => {
       if (!prev) return null;
+      const res = { ...prev.resources };
       const logs = [...prev.logs];
-      let res = { ...prev.resources };
-      let crew = [...prev.crew];
 
-      if (actionType === 'clean_solar') {
-        res.solarEfficiencyFactor = 1.0;
-        res.storedEnergyKWh = Math.min(res.maxBatteryStorageKWh, res.storedEnergyKWh + 8);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '11:00:00 UTC',
-          type: 'action',
-          message: 'MODULE ACTION: Solar Panels Brushed Clean of Dust.',
-          detail: 'Solar efficiency restored to 100%. +8 kWh stored.'
-        });
-      } else if (actionType === 'tend_crops') {
-        res.foodKcal = Math.min(res.maxFoodKcal, res.foodKcal + 800);
-        crew = crew.map(c => ({ ...c, morale: Math.min(100, c.morale + 3) }));
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '11:00:00 UTC',
-          type: 'action',
-          message: 'MODULE ACTION: Greenhouse Crops Tended & Harvested.',
-          detail: '+800 kcal fresh microgreens harvested. Crew morale boosted!'
-        });
-      } else if (actionType === 'flush_water') {
-        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 6);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '11:00:00 UTC',
-          type: 'action',
-          message: 'MODULE ACTION: Water Distillation Filter Flushed.',
-          detail: '+6.0 Liters clean water recovered from loop.'
-        });
-      } else if (actionType === 'inspect_hab') {
-        res.habitatIntegrityPct = Math.min(100, res.habitatIntegrityPct + 5);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '11:00:00 UTC',
-          type: 'action',
-          message: 'MODULE ACTION: Habitat Airlock Tested & Sealed.',
-          detail: 'Hull integrity reinforced by +5%.'
-        });
-      } else if (actionType === 'rover_scout') {
-        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 8);
-        res.foodKcal = Math.min(res.maxFoodKcal, res.foodKcal + 500);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '11:00:00 UTC',
-          type: 'action',
-          message: 'MODULE ACTION: Surface Rover Detected Subsurface Volatiles!',
-          detail: '+8 Liters ice extracted. Crew celebrations erupted!'
-        });
+      if (type === 'water') {
+        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + amount);
+      } else if (type === 'food') {
+        res.foodKcal = Math.min(res.maxFoodKcal, res.foodKcal + amount);
+      } else if (type === 'energy') {
+        res.storedEnergyKWh = Math.min(res.maxBatteryStorageKWh, res.storedEnergyKWh + amount);
+      } else if (type === 'oxygen') {
+        res.oxygenKg = Math.min(res.maxOxygenKg, res.oxygenKg + amount);
+      } else if (type === 'integrity') {
+        res.habitatIntegrityPct = Math.min(100, res.habitatIntegrityPct + amount);
       }
 
-      return {
-        ...prev,
-        resources: res,
-        crew,
-        logs: logs.slice(0, 50)
-      };
-    });
-  };
-
-  const handleReceiveCommSupply = (bonusResource: 'power' | 'oxygen' | 'water') => {
-    if (!missionState) return;
-
-    setMissionState(prev => {
-      if (!prev) return null;
-      const logs = [...prev.logs];
-      let res = { ...prev.resources };
-
-      if (bonusResource === 'power') {
-        res.storedEnergyKWh = Math.min(res.maxBatteryStorageKWh, res.storedEnergyKWh + 15);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '16:00:00 UTC',
-          type: 'milestone',
-          message: 'COMM RELAY: Houston Uplinked Emergency Battery Reserve (+15 kWh).'
-        });
-      } else if (bonusResource === 'oxygen') {
-        res.oxygenKg = Math.min(res.maxOxygenKg, res.oxygenKg + 4);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '16:00:00 UTC',
-          type: 'milestone',
-          message: 'COMM RELAY: Houston Uplinked Oxygen Purge Protocol (+4 kg O₂).'
-        });
-      } else if (bonusResource === 'water') {
-        res.waterLiters = Math.min(res.maxWaterLiters, res.waterLiters + 10);
-        logs.unshift({
-          sol: prev.currentSol,
-          timestamp: '16:00:00 UTC',
-          type: 'milestone',
-          message: 'COMM RELAY: Houston Uplinked Potable Water Reserve (+10 Liters).'
-        });
-      }
+      logs.unshift({
+        sol: prev.currentSol,
+        timestamp: '15:45:00 UTC',
+        type: 'action',
+        message: `EVA SURFACE OPERATION: ${logMsg}`,
+        detail: `Added +${amount} to reserves via field astronaut intervention.`
+      });
 
       return {
         ...prev,
@@ -323,109 +252,101 @@ export function App() {
     setPhase('setup');
   };
 
-  const handleNavigate = (targetPhase: GamePhase) => {
-    if (targetPhase === 'handbook') {
-      setPreviousPhase(phase);
-      setPhase('handbook');
-    } else {
-      setPhase(targetPhase);
-    }
-  };
-
-  const handleCloseHandbook = () => {
-    setPhase(previousPhase || 'landing');
+  const handleExitToTitle = () => {
+    setPhase('landing');
   };
 
   return (
-    <div className="min-h-screen bg-space-950 text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
+    <div className="w-screen h-screen overflow-hidden bg-black text-slate-100 flex flex-col font-sans select-none relative">
       
-      {/* Global Header */}
-      <Header
-        currentPhase={phase}
-        currentSol={missionState?.currentSol}
-        destinationName={DESTINATIONS[setupConfig.destination]?.name}
-        uiMode={uiMode}
-        onToggleUIMode={() => setUiMode(prev => prev === 'junior' ? 'pro' : 'junior')}
-        isMuted={isMuted}
-        setIsMuted={setIsMuted}
-        ambientHumEnabled={ambientHumEnabled}
-        setAmbientHumEnabled={setAmbientHumEnabled}
-        onNavigate={handleNavigate}
-        onRestart={handleRestartMission}
-        masterAlarmActive={missionState?.masterAlarmActive}
-      />
+      {/* 1. TITLE SCREEN (Zero Scrolling Arcade Menu) */}
+      {phase === 'landing' && (
+        <GameTitleScreen
+          onStartGame={() => setPhase('setup')}
+          onQuickStart={handleQuickStart}
+          onOpenHowToPlay={() => setShowHowToPlay(true)}
+          onOpenSettings={() => setShowSettings(true)}
+          onOpenHandbook={() => {
+            setPreviousPhase(phase);
+            setPhase('handbook');
+          }}
+        />
+      )}
 
-      {/* Main Screen Phases */}
-      <main className="flex-1">
-        {phase === 'landing' && (
-          <LandingPage
-            onStartMission={handleStartMission}
-            onOpenHandbook={() => handleNavigate('handbook')}
-          />
-        )}
+      {/* 2. MISSION SELECT SCREEN (Single-Screen Game Setup) */}
+      {phase === 'setup' && (
+        <GameMissionSelect
+          onLaunch={handleLaunchMission}
+          onBack={() => setPhase('landing')}
+        />
+      )}
 
-        {phase === 'setup' && (
-          <MissionSetup
-            onProceedToConstruction={handleProceedToConstruction}
-            onBack={() => setPhase('landing')}
-          />
-        )}
+      {/* 3. 3D INTERACTIVE WEBGAME (Full-Bleed 100% Screen Viewport) */}
+      {phase === 'live_simulation' && missionState && (
+        <Outpost3DGame
+          state={missionState}
+          onAdvanceSol={handleAdvanceSol}
+          onTogglePause={handleTogglePause}
+          onChangeSpeed={handleChangeSpeed}
+          onSilenceMasterAlarm={handleSilenceMasterAlarm}
+          onManualAction={handleManualAction}
+          onAbortMission={handleRestartMission}
+          onExitToTitle={handleExitToTitle}
+          onAddResource={handleAddResource}
+        />
+      )}
 
-        {phase === 'construction' && (
-          <OutpostConstruction
-            setupConfig={setupConfig}
-            onLaunchMission={handleLaunchOutpost}
-            onBack={() => setPhase('setup')}
-          />
-        )}
-
-        {phase === 'live_simulation' && missionState && (
-          uiMode === 'junior' ? (
-            <JuniorMissionControl
-              state={missionState}
-              onAdvanceSol={handleAdvanceSol}
-              onTogglePause={handleTogglePause}
-              onChangeSpeed={handleChangeSpeed}
-              onSilenceMasterAlarm={handleSilenceMasterAlarm}
-              onManualAction={handleManualAction}
-              onModuleAction={handleModuleAction}
-              onSwitchToProMode={() => setUiMode('pro')}
-              onOpenHandbook={() => handleNavigate('handbook')}
-              onReceiveCommSupply={handleReceiveCommSupply}
-            />
-          ) : (
-            <MissionControl
-              state={missionState}
-              onAdvanceSol={handleAdvanceSol}
-              onTogglePause={handleTogglePause}
-              onChangeSpeed={handleChangeSpeed}
-              onSilenceMasterAlarm={handleSilenceMasterAlarm}
-              onManualAction={handleManualAction}
-              onAbortMission={handleRestartMission}
-            />
-          )
-        )}
-
-        {phase === 'debrief' && missionState && (
+      {/* 4. MISSION DEBRIEF SCREEN (Victory / Defeat Arcade Report) */}
+      {phase === 'debrief' && missionState && (
+        <div className="w-full h-full overflow-y-auto bg-slate-950 p-4 sm:p-8">
           <MissionDebrief
             state={missionState}
             onRestart={handleRestartMission}
-            onOpenHandbook={() => handleNavigate('handbook')}
+            onOpenHandbook={() => {
+              setPreviousPhase(phase);
+              setPhase('handbook');
+            }}
+            onExitToTitle={handleExitToTitle}
           />
-        )}
+        </div>
+      )}
 
-        {phase === 'handbook' && (
+      {/* 5. EDUCATIONAL HANDBOOK VIEW */}
+      {phase === 'handbook' && (
+        <div className="w-full h-full overflow-y-auto bg-slate-950 p-4 sm:p-8">
           <EducationalHandbook
-            onBack={handleCloseHandbook}
+            onBack={() => setPhase(previousPhase || 'landing')}
           />
-        )}
-      </main>
+        </div>
+      )}
 
-      {/* Active Crisis Popup Overlay */}
+      {/* TACTICAL CRISIS EVENT POPUP (Authentic Sci-Fi Dialogue Box) */}
       {missionState?.activeCrisis && (
         <EventModal
           activeCrisis={missionState.activeCrisis}
           onSelectChoice={handleCrisisChoice}
+        />
+      )}
+
+      {/* HOW TO PLAY MODAL */}
+      {showHowToPlay && (
+        <HowToPlayModal
+          onClose={() => setShowHowToPlay(false)}
+        />
+      )}
+
+      {/* SETTINGS MODAL */}
+      {showSettings && (
+        <GameSettingsModal
+          isMuted={isMuted}
+          setIsMuted={setIsMuted}
+          ambientHumEnabled={ambientHumEnabled}
+          setAmbientHumEnabled={setAmbientHumEnabled}
+          bgmEnabled={bgmEnabled}
+          setBgmEnabled={setBgmEnabled}
+          quality={quality}
+          setQuality={setQuality}
+          onClose={() => setShowSettings(false)}
         />
       )}
 
