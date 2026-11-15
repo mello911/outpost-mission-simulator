@@ -135,8 +135,8 @@ All human spaceflight equations and values are derived from published NASA stand
 ### Quick Start
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/challenge-3.git
-cd challenge-3
+git clone https://github.com/mello911/outpost-mission-simulator.git
+cd outpost-mission-simulator
 
 # 2. Install dependencies
 npm install
