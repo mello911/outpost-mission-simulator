@@ -1152,6 +1152,35 @@ export class OutpostScene {
     this.renderer.setSize(w, h);
   }
 
+  public getTargets(): InteractiveTarget[] {
+    return this.targets;
+  }
+
+  public getPlayerPosition(): THREE.Vector3 {
+    return this.inRover ? this.roverGroup.position : this.playerPos;
+  }
+
+  public getScreenCoordinates(worldPos: THREE.Vector3): { x: number; y: number; visible: boolean; distance: number } | null {
+    if (!this.container || !this.camera) return null;
+    const v = worldPos.clone();
+    const playerP = this.getPlayerPosition();
+    const distance = Math.round(playerP.distanceTo(worldPos));
+
+    // Project world position to NDC (-1 to +1)
+    v.project(this.camera);
+
+    // Behind camera check
+    const visible = v.z < 1.0 && v.x >= -1.1 && v.x <= 1.1 && v.y >= -1.1 && v.y <= 1.1;
+
+    const halfW = this.container.clientWidth / 2;
+    const halfH = this.container.clientHeight / 2;
+
+    const x = v.x * halfW + halfW;
+    const y = -(v.y * halfH) + halfH;
+
+    return { x, y, visible, distance };
+  }
+
   public dispose() {
     this.isDisposed = true;
     if (this.animFrameId !== null) {
